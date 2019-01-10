@@ -13,6 +13,12 @@ Text Domain: ifrs-portal-plugin-cursos
 Domain Path: /lang
 */
 
+if ( file_exists( dirname( __FILE__ ) . '/vendor/cmb2/init.php' ) ) {
+	require_once dirname( __FILE__ ) . '/vendor/cmb2/init.php';
+} elseif ( file_exists( dirname( __FILE__ ) . '/vendor/CMB2/init.php' ) ) {
+	require_once dirname( __FILE__ ) . '/vendor/CMB2/init.php';
+}
+
 require_once('curso.php');
 require_once('roles.php');
 
