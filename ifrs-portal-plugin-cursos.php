@@ -20,6 +20,8 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/cmb2/init.php' ) ) {
 }
 
 require_once('curso.php');
+require_once('modalidade.php');
+require_once('nivel.php');
 require_once('roles.php');
 
 register_activation_hook(__FILE__, function () {
