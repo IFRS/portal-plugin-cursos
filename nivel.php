@@ -48,3 +48,15 @@ if ( ! function_exists('nivel_taxonomy') ) {
 
     add_action( 'init', 'nivel_taxonomy', 0 );
 }
+
+/**
+ * Limita a profundidade da hierarquia
+ */
+add_filter( 'taxonomy_parent_dropdown_args', 'nivel_taxonomy_limit_parents', 10, 2 );
+
+function nivel_taxonomy_limit_parents( $args, $taxonomy ) {
+    if ( 'nivel' != $taxonomy ) return $args;
+
+    $args['depth'] = '1';
+    return $args;
+}
