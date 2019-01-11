@@ -103,7 +103,8 @@ function curso_metaboxes() {
     ) );
 
 	$info_metabox->add_field( array(
-		'name'       => __( 'Carga Horária', 'ifrs-portal-plugin-cursos' ),
+        'name'       => __( 'Carga Horária', 'ifrs-portal-plugin-cursos' ),
+        'desc'       => __( 'horas', 'ifrs-portal-plugin-cursos' ),
 		'id'         => $prefix . 'carga_horaria',
         'type'       => 'text_small',
         'attributes' => array(
@@ -201,7 +202,7 @@ function curso_metaboxes() {
         'id'                => $prefix . 'modalidade_taxonomy',
         'name'              => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
         'desc'              => __( 'Escolha a Modalidade do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'          => 'modalidade',
+        'taxonomy'          => 'curso_modalidade',
         'type'              => 'taxonomy_radio',
         'show_option_none'  => false,
         'text'              => array(
@@ -226,11 +227,36 @@ function curso_metaboxes() {
         'id'                => $prefix . 'nivel_taxonomy',
         'name'              => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
         'desc'              => __( 'Escolha o Nível do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'          => 'nivel',
+        'taxonomy'          => 'curso_nivel',
         'type'              => 'taxonomy_radio_hierarchical',
         'show_option_none'  => false,
         'text'              => array(
             'no_terms_text' => __( 'Ops! Nenhum nível cadastrado. Por favor, cadastre algum nível antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
+        ),
+        'remove_default'    => 'true',
+    ) );
+
+    /**
+	 * Taxonomy Turno
+	 */
+    $turno_metabox = new_cmb2_box( array(
+		'id'           => 'turno_taxonomy_metabox',
+		'title'        => __( 'Turnos', 'ifrs-portal-plugin-cursos' ),
+		'object_types' => array( 'curso' ),
+		'context'      => 'side',
+		'priority'     => 'low',
+		'show_names'   => false,
+    ) );
+
+    $turno_metabox->add_field( array(
+        'id'                => $prefix . 'turno_taxonomy',
+        'name'              => __( 'Turnos', 'ifrs-portal-plugin-cursos' ),
+        'desc'              => __( 'Escolha o(s) Turno(s) do Curso.', 'ifrs-portal-plugin-cursos' ),
+        'taxonomy'          => 'curso_turno',
+        'type'              => 'taxonomy_multicheck',
+        'select_all_button' => false,
+        'text'              => array(
+            'no_terms_text' => __( 'Ops! Nenhum turno cadastrado. Por favor, cadastre algum turno antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
         ),
         'remove_default'    => 'true',
     ) );
