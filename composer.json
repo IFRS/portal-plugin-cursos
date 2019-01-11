@@ -1,5 +1,6 @@
 {
     "name": "ifrs/portal-plugin-cursos",
+    "description": "",
     "require": {
         "cmb2/cmb2": "^2.5",
         "composer/installers": "^1.6"
