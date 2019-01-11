@@ -1,6 +1,6 @@
 <?php
-if ( ! function_exists('nivel_taxonomy') ) {
-    function nivel_taxonomy() {
+if ( ! function_exists('curso_nivel_taxonomy') ) {
+    function curso_nivel_taxonomy() {
         $labels = array(
             'name'                       => _x( 'Níveis', 'Taxonomy General Name', 'ifrs-portal-plugin-cursos' ),
             'singular_name'              => _x( 'Nível', 'Taxonomy Singular Name', 'ifrs-portal-plugin-cursos' ),
@@ -41,12 +41,13 @@ if ( ! function_exists('nivel_taxonomy') ) {
             'show_tagcloud'              => false,
             'capabilities'               => $capabilities,
             'show_in_rest'               => true,
+            'rewrite'                    => array('slug' => 'cursos/niveis', 'with_front' => false),
         );
 
-        register_taxonomy( 'nivel', array( 'curso' ), $args );
+        register_taxonomy( 'curso_nivel', array( 'curso' ), $args );
     }
 
-    add_action( 'init', 'nivel_taxonomy', 0 );
+    add_action( 'init', 'curso_nivel_taxonomy', 0 );
 }
 
 /**

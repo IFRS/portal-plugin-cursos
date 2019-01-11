@@ -1,6 +1,6 @@
 <?php
-if ( ! function_exists( 'turno_taxonomy' ) ) {
-    function turno_taxonomy() {
+if ( ! function_exists( 'curso_turno_taxonomy' ) ) {
+    function curso_turno_taxonomy() {
         $labels = array(
             'name'                       => _x( 'Turnos', 'Taxonomy General Name', 'ifrs-portal-plugin-cursos' ),
             'singular_name'              => _x( 'Turno', 'Taxonomy Singular Name', 'ifrs-portal-plugin-cursos' ),
@@ -41,10 +41,11 @@ if ( ! function_exists( 'turno_taxonomy' ) ) {
             'show_tagcloud'              => false,
             'capabilities'               => $capabilities,
             'show_in_rest'               => true,
+            'rewrite'                    => array('slug' => 'cursos/turnos', 'with_front' => false),
         );
 
-        register_taxonomy( 'turno', array( 'curso' ), $args );
+        register_taxonomy( 'curso_turno', array( 'curso' ), $args );
     }
 
-    add_action( 'init', 'turno_taxonomy', 0 );
+    add_action( 'init', 'curso_turno_taxonomy', 0 );
 }

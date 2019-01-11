@@ -75,6 +75,7 @@ if ( ! function_exists('curso_post_type') ) {
             'capabilities'        => $capabilities,
             'show_in_rest'        => true,
             'rest_base'           => 'cursos',
+            'rewrite'             => array( 'slug' => 'cursos' ),
         );
         register_post_type( 'curso', $args );
     }

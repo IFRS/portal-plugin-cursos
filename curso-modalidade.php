@@ -1,6 +1,6 @@
 <?php
-if ( ! function_exists('modalidade_taxonomy') ) {
-    function modalidade_taxonomy() {
+if ( ! function_exists('curso_modalidade_taxonomy') ) {
+    function curso_modalidade_taxonomy() {
         $labels = array(
             'name'                       => _x( 'Modalidades', 'Taxonomy General Name', 'ifrs-portal-plugin-cursos' ),
             'singular_name'              => _x( 'Modalidade', 'Taxonomy Singular Name', 'ifrs-portal-plugin-cursos' ),
@@ -41,10 +41,11 @@ if ( ! function_exists('modalidade_taxonomy') ) {
             'show_tagcloud'              => false,
             'capabilities'               => $capabilities,
             'show_in_rest'               => true,
+            'rewrite'                    => array('slug' => 'cursos/modalidades', 'with_front' => false),
         );
 
-        register_taxonomy( 'modalidade', array( 'curso' ), $args );
+        register_taxonomy( 'curso_modalidade', array( 'curso' ), $args );
     }
 
-    add_action( 'init', 'modalidade_taxonomy', 0 );
+    add_action( 'init', 'curso_modalidade_taxonomy', 0 );
 }
