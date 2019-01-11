@@ -59,7 +59,7 @@ if ( ! function_exists('curso_post_type') ) {
             'description'         => __( 'Cursos', 'ifrs-portal-plugin-cursos' ),
             'labels'              => $labels,
             'supports'            => array( 'title', 'editor', 'thumbnail' ),
-            'taxonomies'          => array( 'modalidade', 'nivel' ),
+            'taxonomies'          => array( 'modalidade', 'nivel', 'turno' ),
             'hierarchical'        => false,
             'public'              => true,
             'show_ui'             => true,
