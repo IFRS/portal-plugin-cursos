@@ -55,26 +55,26 @@ if ( ! function_exists('curso_post_type') ) {
 			'edit_published_posts'   => 'edit_cursos',
 		);
         $args = array(
-            'label'                 => __( 'Curso', 'ifrs-portal-plugin-cursos' ),
-            'description'           => __( 'Cursos', 'ifrs-portal-plugin-cursos' ),
-            'labels'                => $labels,
-            'supports'              => array( 'title', 'editor', 'thumbnail' ),
-            'taxonomies'            => array( 'modalidade', 'nivel' ),
-            'hierarchical'          => false,
-            'public'                => true,
-            'show_ui'               => true,
-            'show_in_menu'          => true,
-            'menu_position'         => 10,
-            'menu_icon'             => 'dashicons-welcome-learn-more',
-            'show_in_admin_bar'     => true,
-            'show_in_nav_menus'     => true,
-            'can_export'            => true,
-            'has_archive'           => true,
-            'exclude_from_search'   => false,
-            'publicly_queryable'    => true,
-            'capabilities'          => $capabilities,
-            'show_in_rest'          => true,
-            'rest_base'             => 'cursos',
+            'label'               => __( 'Curso', 'ifrs-portal-plugin-cursos' ),
+            'description'         => __( 'Cursos', 'ifrs-portal-plugin-cursos' ),
+            'labels'              => $labels,
+            'supports'            => array( 'title', 'editor', 'thumbnail' ),
+            'taxonomies'          => array( 'modalidade', 'nivel' ),
+            'hierarchical'        => false,
+            'public'              => true,
+            'show_ui'             => true,
+            'show_in_menu'        => true,
+            'menu_position'       => 10,
+            'menu_icon'           => 'dashicons-welcome-learn-more',
+            'show_in_admin_bar'   => true,
+            'show_in_nav_menus'   => true,
+            'can_export'          => true,
+            'has_archive'         => true,
+            'exclude_from_search' => false,
+            'publicly_queryable'  => true,
+            'capabilities'        => $capabilities,
+            'show_in_rest'        => true,
+            'rest_base'           => 'cursos',
         );
         register_post_type( 'curso', $args );
     }
@@ -93,12 +93,12 @@ function curso_metaboxes() {
 	 * Informações do Curso
 	 */
 	$info_metabox = new_cmb2_box( array(
-		'id'            => 'info_metabox',
-		'title'         => __( 'Informações do Curso', 'ifrs-portal-plugin-cursos' ),
-		'object_types'  => array( 'curso' ),
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true,
+		'id'           => 'info_metabox',
+		'title'        => __( 'Informações do Curso', 'ifrs-portal-plugin-cursos' ),
+		'object_types' => array( 'curso' ),
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => true,
     ) );
 
 	$info_metabox->add_field( array(
@@ -123,10 +123,10 @@ function curso_metaboxes() {
     ) );
 
     $info_metabox->add_field( array(
-        'name'       => __( 'Autorização', 'ifrs-portal-plugin-cursos' ),
-        'desc'       => __( 'Portaria ou documento de autorização.', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'autorizacao',
-		'type'       => 'text',
+        'name' => __( 'Autorização', 'ifrs-portal-plugin-cursos' ),
+        'desc' => __( 'Portaria ou documento de autorização.', 'ifrs-portal-plugin-cursos' ),
+		'id'   => $prefix . 'autorizacao',
+		'type' => 'text',
     ) );
 
     $info_metabox->add_field( array(
@@ -143,21 +143,21 @@ function curso_metaboxes() {
     ) );
 
     $info_metabox->add_field( array(
-        'name'       => __( 'Estrutura Física', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'estrutura',
-		'type'       => 'wysiwyg',
+        'name' => __( 'Estrutura Física', 'ifrs-portal-plugin-cursos' ),
+		'id'   => $prefix . 'estrutura',
+		'type' => 'wysiwyg',
     ) );
 
     /**
 	 * Coordenador do Curso
 	 */
     $coordenador_metabox = new_cmb2_box( array(
-		'id'            => 'coordenador_metabox',
-		'title'         => __( 'Coordenador do Curso', 'ifrs-portal-plugin-cursos' ),
-		'object_types'  => array( 'curso' ),
-		'context'       => 'normal',
-		'priority'      => 'high',
-		'show_names'    => true,
+		'id'           => 'coordenador_metabox',
+		'title'        => __( 'Coordenador do Curso', 'ifrs-portal-plugin-cursos' ),
+		'object_types' => array( 'curso' ),
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => true,
     ) );
 
     $coordenador_metabox->add_field( array(
@@ -179,56 +179,58 @@ function curso_metaboxes() {
     ) );
 
     $coordenador_metabox->add_field( array(
-		'name'       => __( 'Titulação', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'coordenador_titulacao',
-		'type'       => 'text',
+		'name' => __( 'Titulação', 'ifrs-portal-plugin-cursos' ),
+		'id'   => $prefix . 'coordenador_titulacao',
+		'type' => 'text',
     ) );
 
     /**
 	 * Taxonomy Modalidade
 	 */
     $modalidade_metabox = new_cmb2_box( array(
-		'id'            => 'modalidade_taxonomy_metabox',
-		'title'         => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
-		'object_types'  => array( 'curso' ),
-		'context'       => 'side',
-		'priority'      => 'low',
-		'show_names'    => false,
+		'id'           => 'modalidade_taxonomy_metabox',
+		'title'        => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
+		'object_types' => array( 'curso' ),
+		'context'      => 'side',
+		'priority'     => 'low',
+		'show_names'   => false,
     ) );
 
     $modalidade_metabox->add_field( array(
-        'id'             => $prefix . 'modalidade_taxonomy',
-        'name'           => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
-        'desc'           => __( 'Escolha a Modalidade do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'       => 'modalidade',
-        'type'           => 'taxonomy_radio',
-        'text'           => array(
+        'id'                => $prefix . 'modalidade_taxonomy',
+        'name'              => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
+        'desc'              => __( 'Escolha a Modalidade do Curso.', 'ifrs-portal-plugin-cursos' ),
+        'taxonomy'          => 'modalidade',
+        'type'              => 'taxonomy_radio',
+        'show_option_none'  => false,
+        'text'              => array(
             'no_terms_text' => __( 'Ops! Nenhuma modalidade cadastrada. Por favor, cadastre alguma modalidade antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
         ),
-        'remove_default' => 'true',
+        'remove_default'    => 'true',
     ) );
 
     /**
 	 * Taxonomy Nível
 	 */
     $nivel_metabox = new_cmb2_box( array(
-		'id'            => 'nivel_taxonomy_metabox',
-		'title'         => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
-		'object_types'  => array( 'curso' ),
-		'context'       => 'side',
-		'priority'      => 'low',
-		'show_names'    => false,
+		'id'           => 'nivel_taxonomy_metabox',
+		'title'        => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
+		'object_types' => array( 'curso' ),
+		'context'      => 'side',
+		'priority'     => 'low',
+		'show_names'   => false,
     ) );
 
     $nivel_metabox->add_field( array(
-        'id'             => $prefix . 'nivel_taxonomy',
-        'name'           => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
-        'desc'           => __( 'Escolha o Nível do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'       => 'nivel',
-        'type'           => 'taxonomy_radio_hierarchical',
-        'text'           => array(
+        'id'                => $prefix . 'nivel_taxonomy',
+        'name'              => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
+        'desc'              => __( 'Escolha o Nível do Curso.', 'ifrs-portal-plugin-cursos' ),
+        'taxonomy'          => 'nivel',
+        'type'              => 'taxonomy_radio_hierarchical',
+        'show_option_none'  => false,
+        'text'              => array(
             'no_terms_text' => __( 'Ops! Nenhum nível cadastrado. Por favor, cadastre algum nível antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
         ),
-        'remove_default' => 'true',
+        'remove_default'    => 'true',
     ) );
 }
