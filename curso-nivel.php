@@ -56,7 +56,7 @@ if ( ! function_exists('curso_nivel_taxonomy') ) {
 add_filter( 'taxonomy_parent_dropdown_args', 'nivel_taxonomy_limit_parents', 10, 2 );
 
 function nivel_taxonomy_limit_parents( $args, $taxonomy ) {
-    if ( 'nivel' != $taxonomy ) return $args;
+    if ( 'curso_nivel' != $taxonomy ) return $args;
 
     $args['depth'] = '1';
     return $args;
