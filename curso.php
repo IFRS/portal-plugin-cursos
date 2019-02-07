@@ -147,43 +147,19 @@ function curso_metaboxes() {
     $info_metabox->add_field( array(
         'name' => __( 'Estrutura Física', 'ifrs-portal-plugin-cursos' ),
 		'id'   => $prefix . 'estrutura',
-		'type' => 'wysiwyg',
-    ) );
-
-    /**
-	 * Coordenador do Curso
-	 */
-    $coordenador_metabox = new_cmb2_box( array(
-		'id'           => 'coordenador_metabox',
-		'title'        => __( 'Coordenador do Curso', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'normal',
-		'priority'     => 'high',
-		'show_names'   => true,
-    ) );
-
-    $coordenador_metabox->add_field( array(
-		'name'       => __( 'Nome', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'coordenador_nome',
-        'type'       => 'text',
-        'attributes' => array(
-            'required' => 'required',
+        'type' => 'wysiwyg',
+        'options' => array(
+            'textarea_rows' => 15
         ),
     ) );
 
-    $coordenador_metabox->add_field( array(
-		'name'       => __( 'E-mail', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'coordenador_email',
-        'type'       => 'text_email',
-        'attributes' => array(
-            'required' => 'required',
+    $info_metabox->add_field( array(
+        'name' => __( 'Arquivos', 'ifrs-portal-plugin-cursos' ),
+		'id'   => $prefix . 'arquivos',
+        'type' => 'wysiwyg',
+        'options' => array(
+            'textarea_rows' => 10
         ),
-    ) );
-
-    $coordenador_metabox->add_field( array(
-		'name' => __( 'Titulação', 'ifrs-portal-plugin-cursos' ),
-		'id'   => $prefix . 'coordenador_titulacao',
-		'type' => 'text',
     ) );
 
     /**
@@ -259,5 +235,41 @@ function curso_metaboxes() {
             'no_terms_text' => __( 'Ops! Nenhum turno cadastrado. Por favor, cadastre algum turno antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
         ),
         'remove_default'    => 'true',
+    ) );
+
+    /**
+	 * Coordenador do Curso
+	 */
+    $coordenador_metabox = new_cmb2_box( array(
+		'id'           => 'coordenador_metabox',
+		'title'        => __( 'Coordenador do Curso', 'ifrs-portal-plugin-cursos' ),
+		'object_types' => array( 'curso' ),
+		'context'      => 'side',
+		'priority'     => 'low',
+		'show_names'   => true,
+    ) );
+
+    $coordenador_metabox->add_field( array(
+		'name'       => __( 'Nome', 'ifrs-portal-plugin-cursos' ),
+		'id'         => $prefix . 'coordenador_nome',
+        'type'       => 'text',
+        'attributes' => array(
+            'required' => 'required',
+        ),
+    ) );
+
+    $coordenador_metabox->add_field( array(
+		'name'       => __( 'E-mail', 'ifrs-portal-plugin-cursos' ),
+		'id'         => $prefix . 'coordenador_email',
+        'type'       => 'text_email',
+        'attributes' => array(
+            'required' => 'required',
+        ),
+    ) );
+
+    $coordenador_metabox->add_field( array(
+		'name' => __( 'Titulação', 'ifrs-portal-plugin-cursos' ),
+		'id'   => $prefix . 'coordenador_titulacao',
+		'type' => 'text',
     ) );
 }
