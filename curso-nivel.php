@@ -41,7 +41,7 @@ if ( ! function_exists('curso_nivel_taxonomy') ) {
             'show_tagcloud'              => false,
             'capabilities'               => $capabilities,
             'show_in_rest'               => true,
-            'rewrite'                    => array('slug' => 'cursos/niveis', 'with_front' => false),
+            'rewrite'                    => array('slug' => 'cursos/niveis', 'with_front' => false, 'hierarchical' => true),
         );
 
         register_taxonomy( 'curso_nivel', array( 'curso' ), $args );
