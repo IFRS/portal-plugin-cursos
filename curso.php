@@ -125,13 +125,6 @@ function curso_metaboxes() {
     ) );
 
     $info_metabox->add_field( array(
-        'name' => __( 'Autorização', 'ifrs-portal-plugin-cursos' ),
-        'desc' => __( 'Portaria ou documento de autorização.', 'ifrs-portal-plugin-cursos' ),
-		'id'   => $prefix . 'autorizacao',
-		'type' => 'text',
-    ) );
-
-    $info_metabox->add_field( array(
         'name'       => __( 'Nota do MEC', 'ifrs-portal-plugin-cursos' ),
         'desc'       => __( 'Nota dada pela última avaliação do MEC.', 'ifrs-portal-plugin-cursos' ),
 		'id'         => $prefix . 'nota',
@@ -145,20 +138,20 @@ function curso_metaboxes() {
     ) );
 
     $info_metabox->add_field( array(
-        'name' => __( 'Estrutura Física', 'ifrs-portal-plugin-cursos' ),
-		'id'   => $prefix . 'estrutura',
-        'type' => 'wysiwyg',
-        'options' => array(
-            'textarea_rows' => 15
-        ),
-    ) );
-
-    $info_metabox->add_field( array(
         'name' => __( 'Arquivos', 'ifrs-portal-plugin-cursos' ),
 		'id'   => $prefix . 'arquivos',
         'type' => 'wysiwyg',
         'options' => array(
             'textarea_rows' => 10
+        ),
+    ) );
+
+    $info_metabox->add_field( array(
+        'name' => __( 'Estrutura Física', 'ifrs-portal-plugin-cursos' ),
+		'id'   => $prefix . 'estrutura',
+        'type' => 'wysiwyg',
+        'options' => array(
+            'textarea_rows' => 15
         ),
     ) );
 
@@ -265,6 +258,14 @@ function curso_metaboxes() {
         'attributes' => array(
             'required' => 'required',
         ),
+    ) );
+
+    $coordenador_metabox->add_field( array(
+        'name' => __( 'Currículo Lattes', 'ifrs-portal-plugin-cursos' ),
+        'desc' => __( 'URL da página do Currículo Lattes.', 'ifrs-portal-plugin-cursos' ),
+		'id'   => $prefix . 'coordenador_lattes',
+        'type' => 'text_url',
+        'protocols' => array( 'http', 'https' ),
     ) );
 
     $coordenador_metabox->add_field( array(
