@@ -19,6 +19,8 @@ function ifrs_portal_cursos_addRoles() {
     $admin->add_cap('assign_niveis');
     $admin->add_cap('manage_turnos');
     $admin->add_cap('assign_turnos');
+    $admin->add_cap('manage_unidades');
+    $admin->add_cap('assign_unidades');
 
     if (!get_role('cadastrador_cursos')) {
         add_role('cadastrador_cursos', __('Cadastrador de Cursos'), array(
@@ -38,6 +40,8 @@ function ifrs_portal_cursos_addRoles() {
             'assign_niveis'      => true,
             'manage_turnos'      => false,
             'assign_turnos'      => true,
+            'manage_unidades'    => false,
+            'assign_unidades'    => true,
         ));
     }
 
@@ -59,6 +63,8 @@ function ifrs_portal_cursos_addRoles() {
             'assign_niveis'      => true,
             'manage_turnos'      => true,
             'assign_turnos'      => true,
+            'manage_unidades'    => true,
+            'assign_unidades'    => true,
         ));
     }
 }

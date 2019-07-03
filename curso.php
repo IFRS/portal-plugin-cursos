@@ -59,7 +59,7 @@ if ( ! function_exists('curso_post_type') ) {
             'description'         => __( 'Cursos', 'ifrs-portal-plugin-cursos' ),
             'labels'              => $labels,
             'supports'            => array( 'title', 'editor', 'thumbnail' ),
-            'taxonomies'          => array( 'modalidade', 'nivel', 'turno' ),
+            'taxonomies'          => array( 'modalidade', 'nivel', 'turno', 'unidade' ),
             'hierarchical'        => false,
             'public'              => true,
             'show_ui'             => true,
@@ -228,6 +228,31 @@ function curso_metaboxes() {
         'desc' => __( 'Demais informações como "Ato autorizativo e/ou de reconhecimento do MEC", "Resolução de Aprovação e/ou alteração do Curso", etc.', 'ifrs-portal-plugin-cursos' ),
 		'id'   => $prefix . 'arquivos',
         'type' => 'file_list',
+    ) );
+
+    /**
+	 * Taxonomy Unidade
+	 */
+    $unidade_metabox = new_cmb2_box( array(
+		'id'           => 'unidade_taxonomy_metabox',
+		'title'        => __( 'Unidade', 'ifrs-portal-plugin-cursos' ),
+		'object_types' => array( 'curso' ),
+		'context'      => 'side',
+		'priority'     => 'low',
+		'show_names'   => false,
+    ) );
+
+    $unidade_metabox->add_field( array(
+        'id'                => $prefix . 'unidade_taxonomy',
+        'name'              => __( 'Unidade', 'ifrs-portal-plugin-cursos' ),
+        'desc'              => __( 'Escolha a Unidade de oferta do Curso.', 'ifrs-portal-plugin-cursos' ),
+        'taxonomy'          => 'curso_unidade',
+        'type'              => 'taxonomy_radio',
+        'show_option_none'  => false,
+        'text'              => array(
+            'no_terms_text' => __( 'Ops! Nenhuma unidade cadastrada. Por favor, cadastre alguma unidade antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
+        ),
+        'remove_default'    => 'true',
     ) );
 
     /**
