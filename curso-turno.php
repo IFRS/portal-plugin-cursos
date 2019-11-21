@@ -49,3 +49,16 @@ if ( ! function_exists( 'curso_turno_taxonomy' ) ) {
 
     add_action( 'init', 'curso_turno_taxonomy', 0 );
 }
+
+/**
+ * Template
+ */
+add_filter('taxonomy_template', function($template) {
+    global $post;
+
+    if ( is_tax('curso_turno') && empty(locate_template('taxonomy-curso_turno.php', false))) {
+        return plugin_dir_path(__FILE__) . 'templates/taxonomy-curso_turno.php';
+    }
+
+    return $template;
+});

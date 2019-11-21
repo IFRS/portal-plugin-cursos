@@ -61,3 +61,16 @@ function nivel_taxonomy_limit_parents( $args, $taxonomy ) {
     $args['depth'] = '1';
     return $args;
 }
+
+/**
+ * Template
+ */
+add_filter('taxonomy_template', function($template) {
+    global $post;
+
+    if ( is_tax('curso_nivel') && empty(locate_template('taxonomy-curso_nivel.php', false))) {
+        return plugin_dir_path(__FILE__) . 'templates/taxonomy-curso_nivel.php';
+    }
+
+    return $template;
+});

@@ -49,3 +49,16 @@ if ( ! function_exists('curso_unidade_taxonomy') ) {
 
     add_action( 'init', 'curso_unidade_taxonomy', 0 );
 }
+
+/**
+ * Template
+ */
+add_filter('taxonomy_template', function($template) {
+    global $post;
+
+    if ( is_tax('curso_unidade') && empty(locate_template('taxonomy-curso_unidade.php', false))) {
+        return plugin_dir_path(__FILE__) . 'templates/taxonomy-curso_unidade.php';
+    }
+
+    return $template;
+});

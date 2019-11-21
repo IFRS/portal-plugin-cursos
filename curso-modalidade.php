@@ -49,3 +49,16 @@ if ( ! function_exists('curso_modalidade_taxonomy') ) {
 
     add_action( 'init', 'curso_modalidade_taxonomy', 0 );
 }
+
+/**
+ * Template
+ */
+add_filter('taxonomy_template', function($template) {
+    global $post;
+
+    if ( is_tax('curso_modalidade') && empty(locate_template('taxonomy-curso_modalidade.php', false))) {
+        return plugin_dir_path(__FILE__) . 'templates/taxonomy-curso_modalidade.php';
+    }
+
+    return $template;
+});

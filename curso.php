@@ -368,3 +368,26 @@ function curso_metaboxes() {
         'protocols' => array( 'http', 'https' ),
     ) );
 }
+
+/**
+ * Templates
+ */
+add_filter('archive_template', function($template) {
+    global $post;
+
+    if ( is_post_type_archive('curso') && empty(locate_template('archive-curso.php', false))) {
+        return plugin_dir_path(__FILE__) . 'templates/archive-curso.php';
+    }
+
+    return $template;
+});
+
+add_filter('single_template', function($template) {
+    global $post;
+
+    if ( is_singular('curso') && empty(locate_template('single-curso.php', false))) {
+        return plugin_dir_path(__FILE__) . 'templates/single-curso.php';
+    }
+
+    return $template;
+});
