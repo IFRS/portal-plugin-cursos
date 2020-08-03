@@ -21,12 +21,12 @@ require_once('curso-unidade.php');
 require_once('roles.php');
 require_once('queries.php');
 
-register_activation_hook(__FILE__, function () {
+register_activation_hook(__FILE__, function() {
     flush_rewrite_rules();
     ifrs_portal_cursos_addRoles();
 });
 
-register_deactivation_hook(__FILE__, function () {
+register_deactivation_hook(__FILE__, function() {
     flush_rewrite_rules();
     ifrs_portal_cursos_removeRoles();
 });
