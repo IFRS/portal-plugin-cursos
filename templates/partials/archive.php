@@ -28,8 +28,6 @@
         <?php if (have_posts()) : ?>
             <div class="cursos__content">
             <?php while(have_posts()) : the_post(); ?>
-                <?php $niveis = get_the_terms(get_the_ID(), 'curso_nivel'); ?>
-
                 <div class="card curso-item">
                     <div class="card-header">
                         <?php foreach (get_the_terms(get_the_ID(), 'curso_unidade') as $unidade) : ?>
@@ -39,10 +37,11 @@
                     <div class="card-body">
                         <h2 class="card-title curso-item__title"><a href="<?php the_permalink(); ?>" class="curso-item__link"><?php the_title(); ?></a></h2>
                         <p class="card-text">
+                            <?php $niveis = wp_get_post_terms(get_the_ID(), 'curso_nivel', array('orderby' => 'term_id')); ?>
                             <?php foreach ($niveis as $nivel) : ?>
                                 <span class="curso-item__nivel">
-                                    <?php echo get_term_parents_list($nivel->term_id, 'curso_nivel', array('separator' => ' / ', 'inclusive' => false, 'link' => false)); ?>
                                     <?php echo $nivel->name; ?>
+                                    <?php echo ($nivel !== end($niveis)) ? '<strong> / </strong>' : ''; ?>
                                 </span>
                             <?php endforeach; ?>
                             <?php foreach (get_the_terms(get_the_ID(), 'curso_modalidade') as $modalidade) : ?>

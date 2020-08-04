@@ -82,286 +82,233 @@ add_action( 'init', function() {
 /**
  * Definição das metaboxes
  */
-add_action( 'cmb2_admin_init', function() {
+add_action( 'rwmb_meta_boxes', function($metaboxes) {
 	$prefix = '_curso_';
 
 	/**
 	 * Informações do Curso
 	 */
-	$info_metabox = new_cmb2_box( array(
-		'id'           => 'info_metabox',
-		'title'        => __( 'Informações do Curso', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'normal',
-		'priority'     => 'high',
-		'show_names'   => true,
-    ) );
-
-	$info_metabox->add_field( array(
-        'name'       => __( 'Carga Horária', 'ifrs-portal-plugin-cursos' ),
-        'desc'       => __( 'horas', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'carga_horaria',
-        'type'       => 'text_small',
-        'attributes' => array(
-            'required' => 'required',
-            'type'     => 'number',
-            'pattern'  => '\d*',
+    $metaboxes[] = array(
+        'title'      => __( 'Informações do Curso', 'ifrs-portal-plugin-cursos' ),
+        'post_types' => 'curso',
+        'fields'     => array(
+            array(
+                'id'         => $prefix . 'carga_horaria',
+                'name'       => __( 'Carga Horária', 'ifrs-portal-plugin-cursos' ),
+                'desc'       => __( 'em horas.', 'ifrs-portal-plugin-cursos' ),
+                'type'       => 'text',
+                'size'       => 10,
+                'attributes' => array(
+                    'required' => 'required',
+                    'type'     => 'number',
+                    'pattern'  => '\d*',
+                ),
+            ),
+            array(
+                'id'         => $prefix . 'duracao',
+                'name'       => __( 'Duração', 'ifrs-portal-plugin-cursos' ),
+                'desc'       => __( '2 meses, 4 semestres, 3 anos, etc.', 'ifrs-portal-plugin-cursos' ),
+                'type'       => 'text',
+                'attributes' => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'   => $prefix . 'nota',
+                'name' => __( 'Avaliação do Curso', 'ifrs-portal-plugin-cursos' ),
+                'desc' => __( 'Nota recebida pela última avaliação do Curso.', 'ifrs-portal-plugin-cursos' ),
+                'type' => 'number',
+                'step' => '1',
+                'min'  => '1',
+                'max'  => '5',
+            ),
         ),
-    ) );
-
-    $info_metabox->add_field( array(
-        'name'       => __( 'Duração', 'ifrs-portal-plugin-cursos' ),
-        'desc'       => __( '2 meses, 4 semestres, 3 anos, etc.', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'duracao',
-        'type'       => 'text',
-        'attributes' => array(
-            'required' => 'required',
-        ),
-    ) );
-
-    $info_metabox->add_field( array(
-        'name'       => __( 'Avaliação do Curso', 'ifrs-portal-plugin-cursos' ),
-        'desc'       => __( 'Nota recebida pela última avaliação do Curso.', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'nota',
-        'type'       => 'text_small',
-        'attributes' => array(
-            'type' => 'number',
-            'min'  => '1',
-            'max'  => '5',
-            'step' => '1',
-        ),
-    ) );
+    );
 
     /**
 	 * Arquivos do Curso
 	 */
-	$arquivos_metabox = new_cmb2_box( array(
-		'id'           => 'arquivos_metabox',
-		'title'        => __( 'Arquivos do Curso', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'normal',
-		'priority'     => 'high',
-    ) );
-
-    $arquivos_metabox->add_field( array(
-        'name'       => __( 'PPC (Projeto Pedagógico do Curso)', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'ppc',
-        'type'       => 'file',
-        'options' => array(
-            'url' => false,
+    $metaboxes[] = array(
+        'title'      => __( 'Arquivos do Curso', 'ifrs-portal-plugin-cursos' ),
+		'post_types' => 'curso',
+        'fields'     => array(
+            array(
+                'id'               => $prefix . 'ppc',
+                'name'             => __( 'PPC (Projeto Pedagógico do Curso)', 'ifrs-portal-plugin-cursos' ),
+                'type'             => 'file_advanced',
+                'max_file_uploads' => 1,
+                'mime_type'        => 'application/pdf',
+                'attributes'       => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'               => $prefix . 'matriz_curricular',
+                'name'             => __( 'Matriz Curricular Vigente', 'ifrs-portal-plugin-cursos' ),
+                'type'             => 'file_advanced',
+                'max_file_uploads' => 1,
+                'mime_type'        => 'application/pdf',
+                'attributes'       => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'               => $prefix . 'representacao_grafica',
+                'name'             => __( 'Representação Gráfica', 'ifrs-portal-plugin-cursos' ),
+                'type'             => 'file_advanced',
+                'max_file_uploads' => 1,
+                'mime_type'        => 'application/pdf',
+                'attributes'       => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'               => $prefix . 'corpo_docente',
+                'name'             => __( 'Corpo Docente', 'ifrs-portal-plugin-cursos' ),
+                'type'             => 'file_advanced',
+                'max_file_uploads' => 1,
+                'mime_type'        => 'application/pdf',
+                'attributes'       => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'               => $prefix . 'corpo_docente_componentes_curriculares',
+                'name'             => __( 'Corpo Docente X Componentes Curriculares', 'ifrs-portal-plugin-cursos' ),
+                'type'             => 'file_advanced',
+                'max_file_uploads' => 1,
+                'mime_type'        => 'application/pdf',
+                'attributes'       => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'   => $prefix . 'arquivos',
+                'name' => __( 'Outros Arquivos', 'ifrs-portal-plugin-cursos' ),
+                'desc' => __( 'Demais informações como "Ato autorizativo e/ou de reconhecimento do MEC", "Resolução de Aprovação e/ou alteração do Curso", etc.', 'ifrs-portal-plugin-cursos' ),
+                'type' => 'file_advanced',
+            ),
         ),
-        'query_args' => array(
-            'type' => 'application/pdf',
-        ),
-        'attributes'  => array(
-            'required' => 'required',
-        ),
-    ) );
-
-    $arquivos_metabox->add_field( array(
-        'name'       => __( 'Matriz Curricular Vigente', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'matriz_curricular',
-        'type'       => 'file',
-        'options' => array(
-            'url' => false,
-        ),
-        'query_args' => array(
-            'type' => 'application/pdf',
-        ),
-        'attributes'  => array(
-            'required' => 'required',
-        ),
-    ) );
-
-    $arquivos_metabox->add_field( array(
-        'name'       => __( 'Representação Gráfica', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'representacao_grafica',
-        'type'       => 'file',
-        'options' => array(
-            'url' => false,
-        ),
-        'query_args' => array(
-            'type' => 'application/pdf',
-        ),
-        'attributes'  => array(
-            'required' => 'required',
-        ),
-    ) );
-
-    $arquivos_metabox->add_field( array(
-        'name'       => __( 'Corpo Docente', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'corpo_docente',
-        'type'       => 'file',
-        'options' => array(
-            'url' => false,
-        ),
-        'query_args' => array(
-            'type' => 'application/pdf',
-        ),
-        'attributes'  => array(
-            'required' => 'required',
-        ),
-    ) );
-
-    $arquivos_metabox->add_field( array(
-        'name'       => __( 'Corpo Docente X Componentes Curriculares', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'corpo_docente_componentes_curriculares',
-        'type'       => 'file',
-        'options' => array(
-            'url' => false,
-        ),
-        'query_args' => array(
-            'type' => 'application/pdf',
-        ),
-        'attributes'  => array(
-            'required' => 'required',
-        ),
-    ) );
-
-    $arquivos_metabox->add_field( array(
-        'name' => __( 'Outros Arquivos', 'ifrs-portal-plugin-cursos' ),
-        'desc' => __( 'Demais informações como "Ato autorizativo e/ou de reconhecimento do MEC", "Resolução de Aprovação e/ou alteração do Curso", etc.', 'ifrs-portal-plugin-cursos' ),
-		'id'   => $prefix . 'arquivos',
-        'type' => 'file_list',
-    ) );
+    );
 
     /**
 	 * Taxonomy Unidade
 	 */
-    $unidade_metabox = new_cmb2_box( array(
-		'id'           => 'unidade_taxonomy_metabox',
-		'title'        => __( 'Unidade', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'side',
-		'priority'     => 'low',
-		'show_names'   => false,
-    ) );
-
-    $unidade_metabox->add_field( array(
-        'id'                => $prefix . 'unidade_taxonomy',
-        'name'              => __( 'Unidade', 'ifrs-portal-plugin-cursos' ),
-        'desc'              => __( 'Escolha a Unidade de oferta do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'          => 'curso_unidade',
-        'type'              => 'taxonomy_radio',
-        'show_option_none'  => false,
-        'text'              => array(
-            'no_terms_text' => __( 'Ops! Nenhuma unidade cadastrada. Por favor, cadastre alguma unidade antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
+    $metaboxes[] = array(
+        'title'      => __( 'Unidade', 'ifrs-portal-plugin-cursos' ),
+		'post_types' => 'curso',
+		'context'    => 'side',
+		'priority'   => 'low',
+        'fields'     => array(
+            array(
+                'id'                => $prefix . 'unidade_taxonomy',
+                'desc'              => __( 'Escolha a Unidade de oferta do Curso.', 'ifrs-portal-plugin-cursos' ),
+                'type'              => 'taxonomy',
+                'taxonomy'          => 'curso_unidade',
+                'add_new'           => false,
+                'remove_default'    => true,
+            ),
         ),
-        'remove_default'    => 'true',
-    ) );
+    );
 
     /**
 	 * Taxonomy Modalidade
 	 */
-    $modalidade_metabox = new_cmb2_box( array(
-		'id'           => 'modalidade_taxonomy_metabox',
-		'title'        => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'side',
-		'priority'     => 'low',
-		'show_names'   => false,
-    ) );
-
-    $modalidade_metabox->add_field( array(
-        'id'                => $prefix . 'modalidade_taxonomy',
-        'name'              => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
-        'desc'              => __( 'Escolha a Modalidade do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'          => 'curso_modalidade',
-        'type'              => 'taxonomy_radio',
-        'show_option_none'  => false,
-        'text'              => array(
-            'no_terms_text' => __( 'Ops! Nenhuma modalidade cadastrada. Por favor, cadastre alguma modalidade antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
+    $metaboxes[] = array(
+        'title'      => __( 'Modalidade', 'ifrs-portal-plugin-cursos' ),
+		'post_types' => 'curso',
+		'context'    => 'side',
+		'priority'   => 'low',
+        'fields'     => array(
+            array(
+                'id'                => $prefix . 'modalidade_taxonomy',
+                'desc'              => __( 'Escolha a Modalidade do Curso.', 'ifrs-portal-plugin-cursos' ),
+                'type'              => 'taxonomy',
+                'taxonomy'          => 'curso_modalidade',
+                'add_new'           => false,
+                'remove_default'    => true,
+                'field_type'        => 'radio_list',
+            ),
         ),
-        'remove_default'    => 'true',
-    ) );
+    );
 
     /**
 	 * Taxonomy Nível
 	 */
-    $nivel_metabox = new_cmb2_box( array(
-		'id'           => 'nivel_taxonomy_metabox',
-		'title'        => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'side',
-		'priority'     => 'low',
-		'show_names'   => false,
-    ) );
-
-    $nivel_metabox->add_field( array(
-        'id'                => $prefix . 'nivel_taxonomy',
-        'name'              => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
-        'desc'              => __( 'Escolha o Nível do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'          => 'curso_nivel',
-        'type'              => 'taxonomy_radio_hierarchical',
-        'show_option_none'  => false,
-        'text'              => array(
-            'no_terms_text' => __( 'Ops! Nenhum nível cadastrado. Por favor, cadastre algum nível antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
+    $metaboxes[] = array(
+        'title'      => __( 'Nível', 'ifrs-portal-plugin-cursos' ),
+		'post_types' => 'curso',
+		'context'    => 'side',
+		'priority'   => 'low',
+        'fields'     => array(
+            array(
+                'id'                => $prefix . 'nivel_taxonomy',
+                'desc'              => __( 'Escolha o Nível do Curso.', 'ifrs-portal-plugin-cursos' ),
+                'type'              => 'taxonomy',
+                'taxonomy'          => 'curso_nivel',
+                'add_new'           => false,
+                'remove_default'    => true,
+                'field_type'        => 'select_tree',
+            ),
         ),
-        'remove_default'    => 'true',
-    ) );
+    );
 
     /**
 	 * Taxonomy Turno
 	 */
-    $turno_metabox = new_cmb2_box( array(
-		'id'           => 'turno_taxonomy_metabox',
-		'title'        => __( 'Turnos', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'side',
-		'priority'     => 'low',
-		'show_names'   => false,
-    ) );
-
-    $turno_metabox->add_field( array(
-        'id'                => $prefix . 'turno_taxonomy',
-        'name'              => __( 'Turnos', 'ifrs-portal-plugin-cursos' ),
-        'desc'              => __( 'Escolha o(s) Turno(s) do Curso.', 'ifrs-portal-plugin-cursos' ),
-        'taxonomy'          => 'curso_turno',
-        'type'              => 'taxonomy_multicheck',
-        'select_all_button' => false,
-        'text'              => array(
-            'no_terms_text' => __( 'Ops! Nenhum turno cadastrado. Por favor, cadastre algum turno antes de cadastrar um Curso.', 'ifrs-portal-plugin-cursos')
+    $metaboxes[] = array(
+        'title'      => __( 'Turnos', 'ifrs-portal-plugin-cursos' ),
+		'post_types' => 'curso',
+		'context'    => 'side',
+		'priority'   => 'low',
+        'fields'     => array(
+            array(
+                'id'                => $prefix . 'turno_taxonomy',
+                'desc'              => __( 'Escolha o(s) Turno(s) do Curso.', 'ifrs-portal-plugin-cursos' ),
+                'type'              => 'taxonomy',
+                'taxonomy'          => 'curso_turno',
+                'add_new'           => false,
+                'remove_default'    => true,
+                'field_type'        => 'checkbox_list',
+            ),
         ),
-        'remove_default'    => 'true',
-    ) );
+    );
 
     /**
 	 * Coordenador do Curso
 	 */
-    $coordenador_metabox = new_cmb2_box( array(
-		'id'           => 'coordenador_metabox',
-		'title'        => __( 'Coordenador do Curso', 'ifrs-portal-plugin-cursos' ),
-		'object_types' => array( 'curso' ),
-		'context'      => 'side',
-		'priority'     => 'low',
-		'show_names'   => true,
-    ) );
-
-    $coordenador_metabox->add_field( array(
-		'name'       => __( 'Nome', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'coordenador_nome',
-        'type'       => 'text',
-        'attributes' => array(
-            'required' => 'required',
+    $metaboxes[] = array(
+        'title'      => __( 'Coordenador do Curso', 'ifrs-portal-plugin-cursos' ),
+		'post_types' => 'curso',
+		'context'    => 'side',
+		'priority'   => 'low',
+        'fields'     => array(
+            array(
+                'id'         => $prefix . 'coordenador_nome',
+                'name'       => __( 'Nome', 'ifrs-portal-plugin-cursos' ),
+                'type'       => 'text',
+                'attributes' => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'         => $prefix . 'coordenador_email',
+                'name'       => __( 'E-mail', 'ifrs-portal-plugin-cursos' ),
+                'type'       => 'email',
+                'attributes' => array(
+                    'required' => 'required',
+                ),
+            ),
+            array(
+                'id'   => $prefix . 'coordenador_lattes',
+                'name' => __( 'Currículo Lattes', 'ifrs-portal-plugin-cursos' ),
+                'desc' => __( 'URL da página do Currículo Lattes.', 'ifrs-portal-plugin-cursos' ),
+                'type' => 'url',
+            )
         ),
-    ) );
+    );
 
-    $coordenador_metabox->add_field( array(
-		'name'       => __( 'E-mail', 'ifrs-portal-plugin-cursos' ),
-		'id'         => $prefix . 'coordenador_email',
-        'type'       => 'text_email',
-        'attributes' => array(
-            'required' => 'required',
-        ),
-    ) );
-
-    $coordenador_metabox->add_field( array(
-        'name' => __( 'Currículo Lattes', 'ifrs-portal-plugin-cursos' ),
-        'desc' => __( 'URL da página do Currículo Lattes.', 'ifrs-portal-plugin-cursos' ),
-		'id'   => $prefix . 'coordenador_lattes',
-        'type' => 'text_url',
-        'protocols' => array( 'http', 'https' ),
-    ) );
+    return $metaboxes;
 } );
 
 /**
