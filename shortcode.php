@@ -35,7 +35,6 @@ add_shortcode( 'cursos', function($atts) {
     $cursos = new WP_Query($args);
 
     ob_start();
-    print_r($_POST);
 ?>
     <div class="row">
         <div class="col-12 col-lg-9">
