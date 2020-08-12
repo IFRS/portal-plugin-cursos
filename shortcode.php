@@ -24,6 +24,7 @@ add_shortcode( 'cursos', function($atts) {
     }
 
     if ($_POST) {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $args = array_merge($args, $_POST);
     }
 
