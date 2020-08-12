@@ -10,6 +10,7 @@ add_shortcode( 'cursos', function($atts) {
         'cursos'
     );
 
+    // Query args
     $args = array(
         'post_type' => 'curso',
         'posts_per_page' => -1,
@@ -32,6 +33,8 @@ add_shortcode( 'cursos', function($atts) {
         $args['s'] = $_POST['curso_s'];
     }
 
+    $is_mainsite = ($atts['site'] == get_current_blog_id());
+
     switch_to_blog($atts['site']);
     $cursos = new WP_Query($args);
 
@@ -40,36 +43,60 @@ add_shortcode( 'cursos', function($atts) {
     <div class="row">
         <div class="col-12 col-lg-9">
             <div class="cursos__content">
-            <?php while ($cursos->have_posts()) : $cursos->the_post(); ?>
-                <div class="card curso-item">
-                    <div class="card-header">
-                        <?php foreach (get_the_terms(get_the_ID(), 'curso_unidade') as $unidade) : ?>
-                            <span class="curso-item__unidade"><?php echo $unidade->name; ?></span>
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="card-title curso-item__title"><a href="<?php the_permalink(); ?>" class="curso-item__link"><?php the_title(); ?></a></h2>
-                        <p class="card-text">
-                            <?php $niveis = wp_get_post_terms(get_the_ID(), 'curso_nivel', array('orderby' => 'term_id')); ?>
-                            <?php foreach ($niveis as $nivel) : ?>
-                                <span class="curso-item__nivel">
-                                    <?php echo $nivel->name; ?>
-                                    <?php echo ($nivel !== end($niveis)) ? '<strong> / </strong>' : ''; ?>
-                                </span>
+            <?php if ($cursos->have_posts()) : ?>
+                <?php while ($cursos->have_posts()) : $cursos->the_post(); ?>
+                    <div class="card curso-item">
+                    <?php if (!$atts['unidade']) : ?>
+                        <div class="card-header">
+                            <?php foreach (get_the_terms(get_the_ID(), 'curso_unidade') as $unidade) : ?>
+                                <span class="curso-item__unidade"><?php echo $unidade->name; ?></span>
                             <?php endforeach; ?>
-                            <?php foreach (get_the_terms(get_the_ID(), 'curso_modalidade') as $modalidade) : ?>
-                                <span class="curso-item__modalidade"><?php echo $modalidade->name; ?></span>
+                        </div>
+                    <?php endif; ?>
+                        <div class="card-body">
+                            <h2 class="card-title curso-item__title">
+                                <a href="<?php the_permalink(); ?>" class="curso-item__link"><?php the_title(); ?></a>
+                                <?php if (!$is_mainsite) : ?>
+                                    <span class="screen-reader-text"><?php _e('(Abre em outro site)', 'ifrs-portal-plugin-cursos'); ?></span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="curso-item__icon" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M11 7h-5a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-5" />
+                                        <line x1="10" y1="14" x2="20" y2="4" />
+                                        <polyline points="15 4 20 4 20 9" />
+                                    </svg>
+                                <?php endif; ?>
+                            </h2>
+                            <p class="card-text">
+                                <?php $niveis = wp_get_post_terms(get_the_ID(), 'curso_nivel', array('orderby' => 'term_id')); ?>
+                                <?php foreach ($niveis as $nivel) : ?>
+                                    <span class="curso-item__nivel">
+                                        <?php echo $nivel->name; ?>
+                                        <?php echo ($nivel !== end($niveis)) ? '<strong> / </strong>' : ''; ?>
+                                    </span>
+                                <?php endforeach; ?>
+                                <?php foreach (get_the_terms(get_the_ID(), 'curso_modalidade') as $modalidade) : ?>
+                                    <span class="curso-item__modalidade"><?php echo $modalidade->name; ?></span>
+                                <?php endforeach; ?>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <?php $turnos = wp_get_post_terms(get_the_ID(), 'curso_turno', array('orderby' => 'term_order')); ?>
+                            <?php foreach ($turnos as $turno) : ?>
+                                <span class="curso-item__turnos"><?php echo $turno->name; echo ($turno !== end($turnos)) ? ', ' : ''; ?></span>
                             <?php endforeach; ?>
-                        </p>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <?php $turnos = wp_get_post_terms(get_the_ID(), 'curso_turno', array('orderby' => 'term_order')); ?>
-                        <?php foreach ($turnos as $turno) : ?>
-                            <span class="curso-item__turnos"><?php echo $turno->name; echo ($turno !== end($turnos)) ? ', ' : ''; ?></span>
-                        <?php endforeach; ?>
+                <?php endwhile; ?>
+            <?php else : ?>
+                <?php if (isset($_POST['curso_s']) && !empty($_POST['curso_s'])) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php _e('N&atilde;o foram encontrados Cursos com os termos buscados.', 'ifrs-portal-plugin-cursos'); ?>
                     </div>
-                </div>
-            <?php endwhile; ?>
+                <?php else : ?>
+                    <div class="alert alert-warning" role="alert">
+                        <strong><?php _e('Ops!'); ?></strong>&nbsp;<?php _e('N&atilde;o foram encontrados Cursos publicados.', 'ifrs-portal-plugin-cursos'); ?>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
             <?php wp_reset_query(); ?>
             </div>
         </div>
