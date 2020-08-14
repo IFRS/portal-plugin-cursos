@@ -5,6 +5,7 @@ add_shortcode( 'cursos', function($atts) {
         array(
             'site' => get_main_site_id(),
             'unidade' => null,
+            'posts_per_page' => -1,
         ),
         $atts,
         'cursos'
@@ -13,7 +14,9 @@ add_shortcode( 'cursos', function($atts) {
     // Query args
     $args = array(
         'post_type' => 'curso',
-        'posts_per_page' => -1,
+        'posts_per_page' => $atts['posts_per_page'],
+        'orderby' => 'title',
+        'order' => 'ASC',
     );
 
     if ($atts['unidade']) {
@@ -97,7 +100,6 @@ add_shortcode( 'cursos', function($atts) {
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php wp_reset_query(); ?>
             </div>
         </div>
         <div class="col-12 col-lg-3">
@@ -186,6 +188,7 @@ add_shortcode( 'cursos', function($atts) {
         </div>
     </div>
 <?php
+    wp_reset_query();
     restore_current_blog();
     return ob_get_clean();
 } );
