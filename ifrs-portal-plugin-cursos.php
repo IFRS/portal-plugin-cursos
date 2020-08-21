@@ -20,7 +20,7 @@ require_once('curso-turno.php');
 require_once('curso-unidade.php');
 require_once('roles.php');
 require_once('queries.php');
-require_once('shortcode.php');
+require_once('shortcode-vue.php');
 
 register_activation_hook(__FILE__, function() {
     flush_rewrite_rules();
