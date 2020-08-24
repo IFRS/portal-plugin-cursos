@@ -1,6 +1,8 @@
 <template>
   <div id="ifrs-cursos">
-    <router-view></router-view>
+    <keep-alive include="Cursos">
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
