@@ -37,6 +37,9 @@
           <Loading/>
         </div>
       </div>
+      <div class="col-12 col-lg-3">
+        <Filtros/>
+      </div>
       <div class="col-12" v-if="pages && pages > 1">
         <nav aria-label="Paginação de Cursos">
             <ul class="pagination justify-content-center">
@@ -58,11 +61,13 @@
 
 <script>
 import Loading from './Loading';
+import Filtros from './Filtros';
 
 export default {
   name: 'Cursos',
   components: {
     Loading,
+    Filtros,
   },
   data() {
     return {
@@ -87,6 +92,9 @@ export default {
       .then(response => {
         this.cursos = response.data;
         this.pages = parseInt(response.headers['x-wp-totalpages']);
+      })
+      .catch(error => {
+        console.error(error);
       });
     },
   },
