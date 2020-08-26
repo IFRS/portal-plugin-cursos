@@ -1,7 +1,7 @@
 <template>
   <aside class="filter">
     <h3 class="filter__title">Filtros</h3>
-    <form action="" method="POST" class="filter__form">
+    <form class="filter__form" v-on:submit.prevent="filtrar()">
       <div class="input-group">
         <label class="sr-only" for="">Termo para busca</label>
         <input class="form-control form-control-sm" type="text" name="s" value="" id="" placeholder="Buscar cursos..."/>
@@ -9,14 +9,14 @@
       <fieldset>
         <legend>Modalidade</legend>
         <div class="form-check form-check-inline" v-for="(modalidade, m) in modalidades" :key="m">
-          <input class="form-check-input" type="checkbox" name="curso_modalidade[]" :value="modalidade.id" :id="'modalidade-' + modalidade.id">
+          <input class="form-check-input" type="checkbox" v-model="filtros.curso_modalidade" :value="modalidade.id" :id="'modalidade-' + modalidade.id">
           <label class="form-check-label" :for="'modalidade-' + modalidade.id">{{modalidade.name}}</label>
         </div>
       </fieldset>
       <fieldset>
         <legend>Unidade</legend>
         <div class="form-check form-check-inline" v-for="(unidade, u) in unidades" :key="u">
-          <input class="form-check-input" type="checkbox" name="curso_unidade[]" :value="unidade.id" :id="'unidade-' + unidade.id">
+          <input class="form-check-input" type="checkbox" v-model="filtros.curso_unidade" :value="unidade.id" :id="'unidade-' + unidade.id">
           <label class="form-check-label" :for="'unidade-' + unidade.id">{{unidade.name}}</label>
         </div>
       </fieldset>
@@ -24,11 +24,11 @@
           <legend>N&iacute;vel</legend>
           <template v-for="(nivel, n) in niveis">
             <div class="form-check" :key="n">
-              <input class="form-check-input" type="checkbox" name="curso_nivel[]" :value="nivel.id" :id="'nivel-' + nivel.id">
+              <input class="form-check-input" type="checkbox" v-model="filtros.curso_nivel" :value="nivel.id" :id="'nivel-' + nivel.id">
               <label class="form-check-label" :for="'nivel-' + nivel.id">{{nivel.name}}</label>
             </div>
             <div class="form-check ml-3" v-for="filho in nivel.children" :key="filho.id">
-              <input class="form-check-input" type="checkbox" name="curso_nivel[]" :value="filho.id" :id="'nivel-' + filho.id">
+              <input class="form-check-input" type="checkbox" v-model="filtros.curso_nivel" :value="filho.id" :id="'nivel-' + filho.id">
               <label class="form-check-label" :for="'nivel-' + filho.id">{{filho.name}}</label>
             </div>
           </template>
@@ -36,13 +36,13 @@
       <fieldset>
           <legend>Turno</legend>
           <div class="form-check form-check-inline" v-for="(turno, t) in turnos" :key="t">
-            <input class="form-check-input" type="checkbox" name="curso_turno[]" :value="turno.id" :id="'turno-' + turno.id" >
-            <label class="form-check-label" for="'turno-' + turno.id">{{turno.name}}</label>
+            <input class="form-check-input" type="checkbox" v-model="filtros.curso_turno" :value="turno.id" :id="'turno-' + turno.id" >
+            <label class="form-check-label" :for="'turno-' + turno.id">{{turno.name}}</label>
           </div>
       </fieldset>
       <div class="btn-group" role="group" aria-label="Ações do Filtro">
           <input type="submit" value="Filtrar" class="btn btn-primary"/>
-          <button class="btn btn-outline-secondary">Limpar Filtros</button>
+          <button class="btn btn-outline-secondary" @click="limpar">Limpar Filtros</button>
       </div>
     </form>
   </aside>
@@ -57,6 +57,12 @@ export default {
       unidades: null,
       niveis: null,
       turnos: null,
+      filtros: {
+        curso_modalidade: [],
+        curso_unidade: [],
+        curso_nivel: [],
+        curso_turno: [],
+      },
     }
   },
   mounted() {
@@ -66,6 +72,18 @@ export default {
     this.getTurnos();
   },
   methods: {
+    filtrar() {
+      this.$emit('filtro', this.filtros);
+    },
+    limpar() {
+      this.filtros = {
+        curso_modalidade: [],
+        curso_unidade: [],
+        curso_nivel: [],
+        curso_turno: [],
+      }
+      this.$emit('filtro');
+    },
     getModalidades() {
       this.$axios.get('/curso_modalidade')
       .then(response => {

@@ -3,34 +3,39 @@
     <div class="row">
       <div class="col-12 col-lg-9">
         <h2 class="cursos__title">Cursos</h2>
-        <div class="cursos__content" v-if="cursos">
-          <div class="card curso-item" v-for="(curso, i) in cursos" :key="i">
-            <div class="card-header">
-              <span class="curso-item__unidade">
-                {{curso.meta_box._curso_unidade_taxonomy.name}}
-              </span>
-            </div>
-            <div class="card-body">
-              <h2 class="card-title curso-item__title">
-                <a :href="curso.link" class="curso-item__link" @click.prevent.stop="$router.push({ path: `/${curso.slug}`});">{{curso.title.rendered}}</a>
-              </h2>
-              <p class="card-text">
-                <span class="curso-item__nivel" v-for="(nivel, n) in curso.meta_box._curso_nivel_taxonomy" :key="n">
-                  {{nivel.name}}
-                  <template v-if="n+1 < curso.meta_box._curso_nivel_taxonomy.length">
-                    /
-                  </template>
+        <div class="cursos__content" v-if="!loading">
+          <template v-if="cursos && cursos.length > 0">
+            <div class="card curso-item" v-for="(curso, i) in cursos" :key="i">
+              <div class="card-header">
+                <span class="curso-item__unidade">
+                  {{curso.meta_box._curso_unidade_taxonomy.name}}
                 </span>
-                <span class="curso-item__modalidade">
-                  {{curso.meta_box._curso_modalidade_taxonomy.name}}
+              </div>
+              <div class="card-body">
+                <h2 class="card-title curso-item__title">
+                  <a :href="curso.link" class="curso-item__link" @click.prevent.stop="$router.push({ path: `/${curso.slug}`});">{{curso.title.rendered}}</a>
+                </h2>
+                <p class="card-text">
+                  <span class="curso-item__nivel" v-for="(nivel, n) in curso.meta_box._curso_nivel_taxonomy" :key="n">
+                    {{nivel.name}}
+                    <template v-if="n+1 < curso.meta_box._curso_nivel_taxonomy.length">
+                      /
+                    </template>
+                  </span>
+                  <span class="curso-item__modalidade">
+                    {{curso.meta_box._curso_modalidade_taxonomy.name}}
+                  </span>
+                </p>
+              </div>
+              <div class="card-footer">
+                <span class="curso-item__turnos" v-for="(turno, t) in curso.meta_box._curso_turno_taxonomy" :key="t">
+                  {{turno.name}}<template v-if="t+1 < curso.meta_box._curso_turno_taxonomy.length">,</template>
                 </span>
-              </p>
+              </div>
             </div>
-            <div class="card-footer">
-              <span class="curso-item__turnos" v-for="(turno, t) in curso.meta_box._curso_turno_taxonomy" :key="t">
-                {{turno.name}}<template v-if="t+1 < curso.meta_box._curso_turno_taxonomy.length">,</template>
-              </span>
-            </div>
+          </template>
+          <div v-else class="alert alert-warning">
+            N&atilde;o foram encontrados Cursos.
           </div>
         </div>
         <div v-else class="text-center">
@@ -38,7 +43,7 @@
         </div>
       </div>
       <div class="col-12 col-lg-3">
-        <Filtros/>
+        <Filtros v-on:filtro="onFiltro"/>
       </div>
       <div class="col-12" v-if="pages && pages > 1">
         <nav aria-label="Paginação de Cursos">
@@ -71,6 +76,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       cursos: null,
       pages: null,
       page: 1,
@@ -80,14 +86,22 @@ export default {
     this.getCursos();
   },
   methods: {
-    getCursos() {
+    getCursos(filtros) {
+      this.loading = true;
+
+      let query = {
+        order: 'asc',
+        orderby: 'title',
+        page: this.page,
+        per_page: 1,
+      };
+
+      if (filtros) {
+        query = Object.assign(query, filtros);
+      }
+
       this.$axios.get('/cursos', {
-        params: {
-          order: 'asc',
-          orderby: 'title',
-          page: this.page,
-          per_page: 1,
-        }
+        params: query,
       })
       .then(response => {
         this.cursos = response.data;
@@ -95,8 +109,14 @@ export default {
       })
       .catch(error => {
         console.error(error);
+      })
+      .then(() => {
+        this.loading = false;
       });
     },
+    onFiltro: function (params) {
+      this.getCursos(params);
+    }
   },
   watch: {
     page: function(newPage) {
