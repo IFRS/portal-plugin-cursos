@@ -2,7 +2,7 @@
   <article class="cursos">
     <div class="row">
       <div class="col-12 col-lg-9">
-        <h2 class="cursos__title">Cursos</h2>
+        <h2 class="cursos__title">{{title}}</h2>
         <div class="cursos__content" v-if="!loading">
           <template v-if="cursos && cursos.length > 0">
             <div class="card curso-item" v-for="(curso, i) in cursos" :key="i">
@@ -77,12 +77,14 @@ export default {
   data() {
     return {
       loading: false,
+      title: this.$wp.title || 'Cursos',
       cursos: null,
       pages: null,
       page: 1,
     }
   },
   mounted() {
+    console.log(this.$wp);
     this.getCursos();
   },
   methods: {
@@ -93,7 +95,7 @@ export default {
         order: 'asc',
         orderby: 'title',
         page: this.page,
-        per_page: 1,
+        per_page: this.$wp.widget.posts_per_page,
       };
 
       if (filtros) {

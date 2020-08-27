@@ -29,6 +29,9 @@ Vue.prototype.$axios = axios.create({
   timeout: 5000,
 });
 
+Vue.prototype.$wp = wp;
+delete window.wp;
+
 new Vue({
   router,
   render: h => h(App),

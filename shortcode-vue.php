@@ -5,7 +5,7 @@ add_shortcode( 'cursos', function($atts) {
         array(
             'site' => get_main_site_id(),
             'unidade' => null,
-            'posts_per_page' => -1,
+            'posts_per_page' => get_option( 'posts_per_page' ),
         ),
         $atts,
         'cursos'
@@ -17,6 +17,8 @@ add_shortcode( 'cursos', function($atts) {
 
     wp_localize_script('ifrs-cursos-index', 'wp', array(
         'api' => get_rest_url($atts['site'], 'wp/v2'),
+        'title' => get_the_title(),
+        'widget' => $atts,
     ));
 
     ob_start();
