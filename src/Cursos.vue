@@ -84,7 +84,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$wp);
     this.getCursos();
   },
   methods: {
