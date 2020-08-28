@@ -13,7 +13,7 @@
           <label class="form-check-label" :for="'modalidade-' + modalidade.id">{{modalidade.name}}</label>
         </div>
       </fieldset>
-      <fieldset>
+      <fieldset v-if="!$wp.atts.unidade">
         <legend>Unidade</legend>
         <div class="form-check form-check-inline" v-for="(unidade, u) in unidades" :key="u">
           <input class="form-check-input" type="checkbox" v-model="filtros.curso_unidade" :value="unidade.id" :id="'unidade-' + unidade.id">

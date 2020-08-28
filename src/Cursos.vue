@@ -6,7 +6,7 @@
         <div class="cursos__content" v-if="!loading">
           <template v-if="cursos && cursos.length > 0">
             <div class="card curso-item" v-for="(curso, i) in cursos" :key="i">
-              <div class="card-header">
+              <div class="card-header" v-if="!$wp.atts.unidade">
                 <span class="curso-item__unidade">
                   {{curso.meta_box._curso_unidade_taxonomy.name}}
                 </span>
