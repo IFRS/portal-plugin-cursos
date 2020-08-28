@@ -94,7 +94,8 @@ export default {
         order: 'asc',
         orderby: 'title',
         page: this.page,
-        per_page: this.$wp.widget.posts_per_page,
+        per_page: this.$wp.atts.posts_per_page,
+        curso_unidade: this.$wp.atts.unidade,
       };
 
       if (filtros) {

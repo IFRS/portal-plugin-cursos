@@ -11,6 +11,13 @@ add_shortcode( 'cursos', function($atts) {
         'cursos'
     );
 
+    if ($atts['unidade'] && is_string($atts['unidade'])) {
+        switch_to_blog($atts['site']);
+        $unidade = get_term_by('slug', $atts['unidade'], 'curso_unidade');
+        restore_current_blog();
+        $atts['unidade'] = $unidade->term_id;
+    }
+
     wp_enqueue_script('ifrs-cursos-vendors', plugin_dir_url(__FILE__) . 'js/vendors.js', array(), null, true);
     wp_enqueue_script('ifrs-cursos-runtime', plugin_dir_url(__FILE__) . 'js/runtime.js', array(), null, true);
     wp_enqueue_script('ifrs-cursos-index', plugin_dir_url(__FILE__) . 'js/index.js', array(), null, true);
@@ -18,7 +25,7 @@ add_shortcode( 'cursos', function($atts) {
     wp_localize_script('ifrs-cursos-index', 'wp', array(
         'api' => get_rest_url($atts['site'], 'wp/v2'),
         'title' => get_the_title(),
-        'widget' => $atts,
+        'atts' => $atts,
     ));
 
     ob_start();
