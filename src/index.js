@@ -32,6 +32,14 @@ Vue.prototype.$http = axios.create({
 Vue.prototype.$wp = wp;
 delete window.wp;
 
+Vue.filter('plural', (count, singular, plural) => {
+  if (count <= 1) {
+    return singular;
+  } else {
+    return plural;
+  }
+});
+
 new Vue({
   router,
   render: h => h(App),

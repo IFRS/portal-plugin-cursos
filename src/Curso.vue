@@ -89,7 +89,7 @@
                     <circle cx="12" cy="12" r="4" />
                     <path d="M3 12h1M12 3v1M20 12h1M12 20v1M5.6 5.6l.7 .7M18.4 5.6l-.7 .7M17.7 17.7l.7 .7M6.3 17.7l-.7 .7" />
                   </svg>
-                  <h4 class="curso-info__title">Turnos</h4>
+                  <h4 class="curso-info__title">{{parseInt(curso.meta_box._curso_turno_taxonomy.length) | plural('Turno', 'Turnos')}}</h4>
                   <p class="curso-info__text">
                     <span v-for="(turno, t) in curso.meta_box._curso_turno_taxonomy" :key="t">{{turno.name}}<template v-if="t < (curso.meta_box._curso_turno_taxonomy.length - 1)">, </template></span>
                   </p>
