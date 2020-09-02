@@ -98,11 +98,7 @@ export default {
         curso_unidade: this.$wp.atts.unidade,
       };
 
-      if (filtros) {
-        query = Object.assign(query, filtros);
-      }
-
-      this.$axios.get('/cursos', {
+      this.$http.get('/cursos', {
         params: query,
       })
       .then(response => {

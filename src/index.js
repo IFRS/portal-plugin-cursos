@@ -24,7 +24,7 @@ const router = new VueRouter({
   routes,
 });
 
-Vue.prototype.$axios = axios.create({
+Vue.prototype.$http = axios.create({
   baseURL: wp.api,
   timeout: 5000,
 });

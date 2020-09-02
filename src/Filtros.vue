@@ -104,7 +104,7 @@ export default {
       this.$emit('filtro');
     },
     getModalidades() {
-      this.$axios.get('/curso_modalidade')
+      this.$http.get('/curso_modalidade')
       .then(response => {
         this.modalidades = response.data;
       })
@@ -113,7 +113,7 @@ export default {
       });
     },
     getUnidades() {
-      this.$axios.get('/curso_unidade')
+      this.$http.get('/curso_unidade')
       .then(response => {
         this.unidades = response.data;
       })
@@ -122,7 +122,7 @@ export default {
       });
     },
     getNiveis() {
-      this.$axios.get('/curso_nivel', {
+      this.$http.get('/curso_nivel', {
         params: {
           parent: 0,
         },
@@ -130,7 +130,7 @@ export default {
       .then(response => {
         let niveis = response.data.map(pai => {
           pai.children = [];
-          this.$axios.get('/curso_nivel', {
+          this.$http.get('/curso_nivel', {
             params: {
               parent: pai.id,
             },
@@ -147,7 +147,7 @@ export default {
       });
     },
     getTurnos() {
-      this.$axios.get('/curso_turno')
+      this.$http.get('/curso_turno')
       .then(response => {
         this.turnos = response.data;
       })

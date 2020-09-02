@@ -155,7 +155,7 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get('/cursos', {
+    this.$http.get('/cursos', {
       params: {
         slug: this.slug,
       },
@@ -168,7 +168,7 @@ export default {
     curso: function(curso) {
       if (curso.featured_media) {
         this.media_loading = true;
-        this.$axios.get('/media/' + curso.featured_media)
+        this.$http.get('/media/' + curso.featured_media)
         .then(response => {
           this.media = response.data;
         })
