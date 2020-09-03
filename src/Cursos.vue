@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="col-12 col-lg-3">
-        <Filtros v-on:filtro="onFiltro"/>
+        <Filtros @filtro="onFiltro"/>
       </div>
       <div class="col-12" v-if="pages && pages > 1">
         <nav aria-label="Paginação de Cursos">
@@ -81,6 +81,12 @@ export default {
       cursos: null,
       pages: null,
       page: 1,
+      per_page: this.$wp.atts.posts_per_page,
+      search: this.$route.query.busca || null,
+      curso_modalidade: this.$route.query.modalidade || [],
+      curso_unidade: this.$wp.atts.unidade || this.$route.query.unidade || [],
+      curso_nivel: this.$route.query.nivel || [],
+      curso_turno: this.$route.query.turno || [],
     }
   },
   mounted() {
@@ -94,9 +100,17 @@ export default {
         order: 'asc',
         orderby: 'title',
         page: this.page,
-        per_page: this.$wp.atts.posts_per_page,
-        curso_unidade: this.$wp.atts.unidade,
+        per_page: this.per_page,
+        search: this.search,
+        curso_modalidade: this.curso_modalidade,
+        curso_unidade: this.curso_unidade,
+        curso_nivel: this.curso_nivel,
+        curso_turno: this.curso_turno,
       };
+
+      if (filtros) {
+        query = Object.assign(query, filtros);
+      }
 
       this.$http.get('/cursos', {
         params: query,

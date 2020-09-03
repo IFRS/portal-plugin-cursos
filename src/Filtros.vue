@@ -101,7 +101,7 @@ export default {
         curso_nivel: [],
         curso_turno: [],
       }
-      this.$emit('filtro');
+      this.filtrar();
     },
     getModalidades() {
       this.$http.get('/curso_modalidade')
