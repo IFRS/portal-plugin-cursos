@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-12 col-lg-9">
         <h2 class="cursos__title">{{title}}</h2>
+        <div v-if="description" v-html="description"/>
         <div class="cursos__content" v-if="!loading">
           <template v-if="cursos && cursos.length > 0">
             <div class="card curso-item" v-for="(curso, i) in cursos" :key="i">
@@ -78,6 +79,7 @@ export default {
     return {
       loading: false,
       title: this.$wp.title || 'Cursos',
+      description: this.$wp.description || '',
       cursos: null,
       pages: null,
       page: 1,

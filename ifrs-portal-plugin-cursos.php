@@ -19,6 +19,7 @@ require_once('curso-nivel.php');
 require_once('curso-turno.php');
 require_once('curso-unidade.php');
 require_once('roles.php');
+require_once('config.php');
 require_once('queries.php');
 require_once('shortcode-vue.php');
 

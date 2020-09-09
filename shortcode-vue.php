@@ -25,6 +25,7 @@ add_shortcode( 'cursos', function($atts) {
     wp_localize_script('ifrs-cursos-index', 'wp', array(
         'api' => get_rest_url($atts['site'], 'wp/v2'),
         'title' => get_the_title(),
+        'description' => wpautop(get_option('ifrs_cursos_intro')),
         'atts' => $atts,
     ));
 
