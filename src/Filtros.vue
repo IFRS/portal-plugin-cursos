@@ -8,37 +8,49 @@
       </div>
       <fieldset>
         <legend>Modalidade</legend>
-        <div class="form-check form-check-inline" v-for="(modalidade, m) in modalidades" :key="m">
-          <input class="form-check-input" type="checkbox" v-model="filtros.curso_modalidade" :value="modalidade.id" :id="'modalidade-' + modalidade.id">
-          <label class="form-check-label" :for="'modalidade-' + modalidade.id">{{modalidade.name}}</label>
-        </div>
+        <template v-if="modalidades">
+          <div class="form-check form-check-inline" v-for="(modalidade, m) in modalidades" :key="m">
+            <input class="form-check-input" type="checkbox" v-model="filtros.curso_modalidade" :value="modalidade.id" :id="'modalidade-' + modalidade.id">
+            <label class="form-check-label" :for="'modalidade-' + modalidade.id">{{modalidade.name}}</label>
+          </div>
+        </template>
+        <Loading v-else :linha="true"/>
       </fieldset>
       <fieldset v-if="!$wp.atts.unidade">
         <legend>Unidade</legend>
-        <div class="form-check form-check-inline" v-for="(unidade, u) in unidades" :key="u">
-          <input class="form-check-input" type="checkbox" v-model="filtros.curso_unidade" :value="unidade.id" :id="'unidade-' + unidade.id">
-          <label class="form-check-label" :for="'unidade-' + unidade.id">{{unidade.name}}</label>
-        </div>
+        <template v-if="unidades">
+          <div class="form-check form-check-inline" v-for="(unidade, u) in unidades" :key="u">
+            <input class="form-check-input" type="checkbox" v-model="filtros.curso_unidade" :value="unidade.id" :id="'unidade-' + unidade.id">
+            <label class="form-check-label" :for="'unidade-' + unidade.id">{{unidade.name}}</label>
+          </div>
+        </template>
+        <Loading v-else :linha="true"/>
       </fieldset>
       <fieldset>
         <legend>N&iacute;vel</legend>
-        <template v-for="(nivel, n) in niveis">
-          <div class="form-check" :key="n">
-            <input class="form-check-input" type="checkbox" v-model="filtros.curso_nivel" :value="nivel.id" :id="'nivel-' + nivel.id">
-            <label class="form-check-label" :for="'nivel-' + nivel.id">{{nivel.name}}</label>
-          </div>
-          <div class="form-check ml-3" v-for="filho in nivel.children" :key="filho.id">
-            <input class="form-check-input" type="checkbox" v-model="filtros.curso_nivel" :value="filho.id" :id="'nivel-' + filho.id">
-            <label class="form-check-label" :for="'nivel-' + filho.id">{{filho.name}}</label>
-          </div>
+        <template v-if="niveis">
+          <template v-for="(nivel, n) in niveis">
+            <div class="form-check" :key="n">
+              <input class="form-check-input" type="checkbox" v-model="filtros.curso_nivel" :value="nivel.id" :id="'nivel-' + nivel.id">
+              <label class="form-check-label" :for="'nivel-' + nivel.id">{{nivel.name}}</label>
+            </div>
+            <div class="form-check ml-3" v-for="filho in nivel.children" :key="filho.id">
+              <input class="form-check-input" type="checkbox" v-model="filtros.curso_nivel" :value="filho.id" :id="'nivel-' + filho.id">
+              <label class="form-check-label" :for="'nivel-' + filho.id">{{filho.name}}</label>
+            </div>
+          </template>
         </template>
+        <Loading v-else :linha="true"/>
       </fieldset>
       <fieldset>
         <legend>Turno</legend>
-        <div class="form-check form-check-inline" v-for="(turno, t) in turnos" :key="t">
-          <input class="form-check-input" type="checkbox" v-model="filtros.curso_turno" :value="turno.id" :id="'turno-' + turno.id" >
-          <label class="form-check-label" :for="'turno-' + turno.id">{{turno.name}}</label>
-        </div>
+        <template v-if="turnos">
+          <div class="form-check form-check-inline" v-for="(turno, t) in turnos" :key="t">
+            <input class="form-check-input" type="checkbox" v-model="filtros.curso_turno" :value="turno.id" :id="'turno-' + turno.id" >
+            <label class="form-check-label" :for="'turno-' + turno.id">{{turno.name}}</label>
+          </div>
+        </template>
+        <Loading v-else :linha="true"/>
       </fieldset>
       <fieldset class="text-center">
         <div class="btn-group" role="group" aria-label="Ações do Filtro">
@@ -51,8 +63,13 @@
 </template>
 
 <script>
+import Loading from './Loading';
+
 export default {
   name: 'Filtros',
+  components: {
+    Loading,
+  },
   data() {
     return {
       modalidades: null,
