@@ -333,3 +333,7 @@ add_filter( 'single_template', function($template) {
 
     return $template;
 } );
+
+add_filter( 'page_template', function($template) {
+    return plugin_dir_path(__FILE__) . 'templates/page-cursos.php';
+} );
