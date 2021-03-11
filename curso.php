@@ -335,5 +335,9 @@ add_filter( 'single_template', function($template) {
 } );
 
 add_filter( 'page_template', function($template) {
-    return plugin_dir_path(__FILE__) . 'templates/page-cursos.php';
+    if (empty(locate_template('page-cursos.php', false))) {
+        return plugin_dir_path(__FILE__) . 'templates/page-cursos.php';
+    }
+
+    return $template;
 } );
